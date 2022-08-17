@@ -1,0 +1,27 @@
+{
+  "name": "vitamin",
+  "private": true,
+  "workspaces": [
+    "packages/@vitamin/*"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.{js,vue,ts,json}": "eslint --fix"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.1",
+    "lerna": "^5.4.3",
+    "lerna-changelog": "^2.2.0",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1"
+  }
+}
