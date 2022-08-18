@@ -7,8 +7,8 @@
   "scripts": {
     "cz": "czg",
     "format": "prettier write .",
-    "lint": "eslint . --max-warnings 0",
-    "lint:fix": "eslint --fix ."
+    "lint": "eslint . --max-warnings 0 && pretty-quick --check --branch master",
+    "lint:fix": "eslint . --fix && pretty-quick --check --branch master"
   },
   "husky": {
     "hooks": {

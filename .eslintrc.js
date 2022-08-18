@@ -131,7 +131,7 @@ module.exports = {
     camelcase: ['error', { properties: 'never' }],
     'no-unused-vars': 'warn',
     // 禁止末尾逗号 --fix
-    'comma-dangle': ['error', 'never'],
+    'comma-dangle': ['off', 'never'],
     // 强制在逗号前后使用一致的空格 --fix
     'comma-spacing': ['error', { before: false, after: true }],
     // 逗号风格: 要求逗号放在数组元素、对象属性或变量声明之后，且在同一行 --fix
