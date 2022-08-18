@@ -5,7 +5,9 @@
     "packages/@vitamin/*"
   ],
   "scripts": {
-    "prepare": "husky install"
+    "format": "prettier write .",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint --fix"
   },
   "husky": {
     "hooks": {
@@ -14,11 +16,12 @@
     }
   },
   "lint-staged": {
-    "*.{js,vue,ts,json}": "[prettier --write, eslint --fix]"
+    "*.{js,vue,ts,json,md,tsx,jsx}": "[prettier --write ., eslint --fix]"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
+    "eslint": "^8.22.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.1",

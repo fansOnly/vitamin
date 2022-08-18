@@ -5,3 +5,5 @@ const obj = {
 }
 
 var val = 'aaaaaa'
+
+function my_name() {}
