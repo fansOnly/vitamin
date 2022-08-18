@@ -131,7 +131,7 @@ module.exports = {
     camelcase: ['error', { properties: 'never' }],
     'no-unused-vars': 'warn',
     // 禁止末尾逗号 --fix
-    'comma-dangle': ['error', 'never'],
+    'comma-dangle': ['off', 'never'],
     // 强制在逗号前后使用一致的空格 --fix
     'comma-spacing': ['error', { before: false, after: true }],
     // 逗号风格: 要求逗号放在数组元素、对象属性或变量声明之后，且在同一行 --fix
@@ -204,31 +204,7 @@ module.exports = {
     'space-infix-ops': 'error',
     // 要求在一元操作符之前或之后存在空格 --fix
     'space-unary-ops': ['error', { words: true, nonwords: false }],
-    // 要求在注释前有空白 (space 或 tab) --fix
-    'spaced-comment': [
-      'error',
-      'always',
-      {
-        markers: [
-          'global',
-          'globals',
-          'eslint',
-          'eslint-disable',
-          '*package',
-          '!',
-          ',',
-        ],
-      },
-    ],
     yoda: ['error', 'never'], // 禁止Yoda条件 --fix
     'prefer-const': 'error', // 建议使用const --fix
-    // 强制在花括号中使用一致的空格 --fix
-    'object-curly-spacing': ['error', 'always', { objectsInObjects: false }],
-    // 禁止或强制在括号内使用空格 --fix
-    'array-bracket-spacing': [
-      'error',
-      'never',
-      { objectsInArrays: true, arraysInArrays: true },
-    ],
   },
 }
