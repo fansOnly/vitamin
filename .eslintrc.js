@@ -204,31 +204,9 @@ module.exports = {
     'space-infix-ops': 'error',
     // 要求在一元操作符之前或之后存在空格 --fix
     'space-unary-ops': ['error', { words: true, nonwords: false }],
-    // 要求在注释前有空白 (space 或 tab) --fix
-    'spaced-comment': [
-      'error',
-      'always',
-      {
-        markers: [
-          'global',
-          'globals',
-          'eslint',
-          'eslint-disable',
-          '*package',
-          '!',
-          ',',
-        ],
-      },
-    ],
     yoda: ['error', 'never'], // 禁止Yoda条件 --fix
     'prefer-const': 'error', // 建议使用const --fix
     // 强制在花括号中使用一致的空格 --fix
-    // 'object-curly-spacing': ['error', 'always', { objectsInObjects: false }],
-    // 禁止或强制在括号内使用空格 --fix
-    'array-bracket-spacing': [
-      'error',
-      'never',
-      { objectsInArrays: true, arraysInArrays: true },
-    ],
+    'object-curly-spacing': ['error', 'always', { objectsInObjects: false }],
   },
 }
