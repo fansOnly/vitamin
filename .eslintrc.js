@@ -223,7 +223,7 @@ module.exports = {
     yoda: ['error', 'never'], // 禁止Yoda条件 --fix
     'prefer-const': 'error', // 建议使用const --fix
     // 强制在花括号中使用一致的空格 --fix
-    'object-curly-spacing': ['error', 'always', { objectsInObjects: false }],
+    // 'object-curly-spacing': ['error', 'always', { objectsInObjects: false }],
     // 禁止或强制在括号内使用空格 --fix
     'array-bracket-spacing': [
       'error',
