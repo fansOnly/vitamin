@@ -206,7 +206,5 @@ module.exports = {
     'space-unary-ops': ['error', { words: true, nonwords: false }],
     yoda: ['error', 'never'], // 禁止Yoda条件 --fix
     'prefer-const': 'error', // 建议使用const --fix
-    // 强制在花括号中使用一致的空格 --fix
-    'object-curly-spacing': ['error', 'always', { objectsInObjects: false }],
   },
 }
