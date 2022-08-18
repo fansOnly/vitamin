@@ -5,9 +5,10 @@
     "packages/@vitamin/*"
   ],
   "scripts": {
+    "cz": "czg",
     "format": "prettier write .",
     "lint": "eslint . --max-warnings 0",
-    "lint:fix": "eslint --fix"
+    "lint:fix": "eslint --fix ."
   },
   "husky": {
     "hooks": {
@@ -16,14 +17,12 @@
     }
   },
   "lint-staged": {
-    "*.{js,vue,ts,json,md,tsx,jsx}": "[prettier --write ., eslint --fix]"
+    "*.{js,vue,ts,json,md,tsx,jsx}": "eslint --fix"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
-    "eslint": "^8.22.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.2.1",
+    "czg": "^1.3.10",
     "husky": "^8.0.1",
     "lerna": "^5.4.3",
     "lerna-changelog": "^2.2.0",

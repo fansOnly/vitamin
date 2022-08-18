@@ -1,0 +1,36 @@
+{
+  "name": "@vitamin/cli-plugin-eslint",
+  "version": "0.0.1",
+  "description": "Eslint Config",
+  "author": "fansonly <251115151@qq.com>",
+  "homepage": "https://github.com/fansOnly/vitamin#readme",
+  "license": "ISC",
+  "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fansOnly/vitamin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fansOnly/vitamin/issues"
+  },
+  "peerDependencies": {
+    "eslint": "^8.0.0"
+  },
+  "dependencies": {
+    "@babel/core": "^7.18.10",
+    "@babel/eslint-parser": "^7.18.9",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.3.0",
+    "prettier": "^2.7.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.22.0"
+  }
+}
