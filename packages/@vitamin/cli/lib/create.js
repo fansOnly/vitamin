@@ -1,7 +1,7 @@
 const fs = require('fs-extra')
 const path = require('path')
 const inquirer = require('inquirer')
-const { chalk, stopSpinner, error } = require('@vue/cli-shared-utils')
+const { chalk, stopSpinner, error, exit } = require('@vue/cli-shared-utils')
 const Creator = require('./Creator')
 const { getPromptModules } = require('./util/createTools')
 const { clearConsole } = require('./util/clearConsole')
@@ -13,17 +13,18 @@ async function create(projectName, options) {
   const name = isCurrent ? path.relative('../', cwd) : projectName
   const targetDir = path.resolve(cwd, projectName || '.')
 
-
   const result = validateProjectName(name)
   // 文件名称不合法
   if (!result.validForNewPackages) {
     console.error(chalk.red(`Invalid project name: "${name}"`))
-    result.errors && result.errors.forEach(err => {
-      console.error(chalk.red.dim('Error: ' + err))
-    })
-    result.warnings && result.warnings.forEach(warn => {
-      console.error(chalk.red.dim('Warning: ' + warn))
-    })
+    result.errors &&
+      result.errors.forEach((err) => {
+        console.error(chalk.red.dim('Error: ' + err))
+      })
+    result.warnings &&
+      result.warnings.forEach((warn) => {
+        console.error(chalk.red.dim('Warning: ' + warn))
+      })
     exit(1)
   }
 
@@ -37,8 +38,8 @@ async function create(projectName, options) {
           {
             name: 'ok',
             type: 'confirm',
-            message: 'Generate project in current directory?'
-          }
+            message: 'Generate project in current directory?',
+          },
         ])
         if (!ok) return
       } else {
@@ -46,13 +47,15 @@ async function create(projectName, options) {
           {
             name: 'action',
             type: 'list',
-            message: `Target directory ${chalk.cyan(targetDir)} already exists. Pick an action:`,
+            message: `Target directory ${chalk.cyan(
+              targetDir
+            )} already exists. Pick an action:`,
             choices: [
               { name: 'Overwrite', value: 'overwrite' },
               { name: 'Merge', value: 'merge' },
-              { name: 'Cancel', value: false }
-            ]
-          }
+              { name: 'Cancel', value: false },
+            ],
+          },
         ])
         if (!action) {
           return
@@ -69,7 +72,7 @@ async function create(projectName, options) {
 }
 
 module.exports = (...args) => {
-  return create(...args).catch(err => {
+  return create(...args).catch((err) => {
     stopSpinner(false) // do not persist
     error(err)
   })

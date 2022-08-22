@@ -154,9 +154,10 @@ module.exports = {
      */
     'keyword-spacing': ['error', { before: true, after: true }],
     // 限制函数定义中最大参数个数 - 3
-    'max-params': ['error', { max: 3 }],
+    'max-params': ['error', { max: 4 }],
     'no-console': 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-unreachable': 'warn',
     // 禁止出现多个空格 --fix
     'no-multi-spaces': 'error',
     // 多个空行 --fix

@@ -9,17 +9,17 @@ const writeFileTree = require('./util/writeFileTree')
 const {
   chalk,
   log,
-  
+
   hasYarn,
   hasPnpm3OrLater,
   hasPnpmVersionOrLater,
-  
+
   resolvePkg,
-  execa
+  execa,
 } = require('@vue/cli-shared-utils')
 
 // 手动选择配置
-const isManualMode = answers => answers.preset === '__manual__'
+const isManualMode = (answers) => answers.preset === '__manual__'
 
 module.exports = class Creator extends EventEmitter {
   constructor(name, context, promptModules) {
@@ -28,27 +28,29 @@ module.exports = class Creator extends EventEmitter {
     this.name = name
     this.context = process.env.VITAMIN_CLI_CONTEXT = context
     const { presetPrompt, featurePrompt } = this.resolveIntroPrompts()
-    
+
     this.presetPrompt = presetPrompt
     this.featurePrompt = featurePrompt
     this.outroPrompts = this.resolveOutroPrompts()
     this.injectedPrompts = []
 
     const promptAPI = new PromptModuleAPI(this)
-    promptModules.forEach(m => m(promptAPI))
+    promptModules.forEach((m) => m(promptAPI))
   }
 
   async create(cliOptions = {}, preset = null) {
     const { name, context } = this
 
-    const packageManager = (
+    const packageManager =
       cliOptions.packageManager ||
       (hasYarn() ? 'yarn' : null) ||
       (hasPnpm3OrLater() ? 'pnpm' : 'npm')
-    )
 
     await clearConsole()
-    const pm = new PackageManager({ context, forcePackageManager: packageManager })
+    const pm = new PackageManager({
+      context,
+      forcePackageManager: packageManager,
+    })
 
     log(`✨  Creating project in ${chalk.yellow(context)}.`)
     this.emit('creation', { event: 'creating' })
@@ -59,12 +61,12 @@ module.exports = class Creator extends EventEmitter {
       version: '1.0.0',
       private: true,
       devDependencies: {},
-      ...resolvePkg(context)
+      ...resolvePkg(context),
     }
 
     // write package.json
     await writeFileTree(context, {
-      'package.json': JSON.stringify(pkg, null, 2)
+      'package.json': JSON.stringify(pkg, null, 2),
     })
 
     // generate a .npmrc file for pnpm, to persist the `shamefully-flatten` flag
@@ -74,7 +76,7 @@ module.exports = class Creator extends EventEmitter {
         : 'shamefully-flatten=true\n'
 
       await writeFileTree(context, {
-        '.npmrc': pnpmConfig
+        '.npmrc': pnpmConfig,
       })
     }
 
@@ -84,7 +86,7 @@ module.exports = class Creator extends EventEmitter {
     // this.emit('creation', { event: 'plugins-install' })
 
     // run generator
-    log(`🚀  Invoking generators...`)
+    log('🚀  Invoking generators...')
     this.emit('creation', { event: 'invoking-generators' })
     const generator = new Generator(context, {
       pkg,
@@ -92,23 +94,33 @@ module.exports = class Creator extends EventEmitter {
     await generator.generate()
 
     // install additional deps (injected by generators)
-    log(`📦  Installing additional dependencies...`)
+    log('📦  Installing additional dependencies...')
     this.emit('creation', { event: 'deps-install' })
     log()
     await pm.install()
 
     // run complete cbs if any (injected by generators)
-    log(`⚓  Running completion hooks...`)
+    log('⚓  Running completion hooks...')
     this.emit('creation', { event: 'completion-hooks' })
-    
+
     // log instructions
     log()
     log(`🎉  Successfully created project ${chalk.yellow(name)}.`)
     if (!cliOptions.skipGetStarted) {
       log(
-        `👉  Get started with the following commands:\n\n` +
-        (this.context === process.cwd() ? `` : chalk.cyan(` ${chalk.gray('$')} cd ${name}\n`)) +
-        chalk.cyan(` ${chalk.gray('$')} ${packageManager === 'yarn' ? 'yarn serve' : packageManager === 'pnpm' ? 'pnpm run serve' : 'npm run serve'}`)
+        '👉  Get started with the following commands:\n\n' +
+          (this.context === process.cwd()
+            ? ''
+            : chalk.cyan(` ${chalk.gray('$')} cd ${name}\n`)) +
+          chalk.cyan(
+            ` ${chalk.gray('$')} ${
+              packageManager === 'yarn'
+                ? 'yarn serve'
+                : packageManager === 'pnpm'
+                ? 'pnpm run serve'
+                : 'npm run serve'
+            }`
+          )
       )
     }
     log()
@@ -119,7 +131,7 @@ module.exports = class Creator extends EventEmitter {
 
   run(command, args) {
     if (!args) {
-      [command, ...args] = command.split(/\s+/)
+      ;[command, ...args] = command.split(/\s+/)
     }
     return execa(command, args, { cwd: this.context })
   }
@@ -146,11 +158,11 @@ module.exports = class Creator extends EventEmitter {
       // manual
       preset = {
         useConfigFiles: answers.useConfigFiles === 'files',
-        plugins: {}
+        plugins: {},
       }
       answers.features = answers.features || []
       // run cb registered by prompt modules to finalize the preset
-      this.promptCompleteCbs.forEach(cb => cb(answers, preset))
+      this.promptCompleteCbs.forEach((cb) => cb(answers, preset))
     }
 
     // TODO validate preset
@@ -177,13 +189,13 @@ module.exports = class Creator extends EventEmitter {
     const presetPrompt = {
       name: 'preset',
       type: 'list',
-      message: `Please pick a preset:`,
+      message: 'Please pick a preset:',
       choices: [
         {
           name: 'Manually select features',
-          value: '__manual__'
-        }
-      ]
+          value: '__manual__',
+        },
+      ],
     }
     const featurePrompt = {
       name: 'features',
@@ -191,16 +203,16 @@ module.exports = class Creator extends EventEmitter {
       type: 'checkbox',
       message: 'Check the features needed for your project:',
       choices: [],
-      pageSize: 10
+      pageSize: 10,
     }
 
     return {
       presetPrompt,
-      featurePrompt
+      featurePrompt,
     }
   }
 
-  resolveOutroPrompts () {
+  resolveOutroPrompts() {
     const outroPrompts = [
       {
         name: 'useConfigFiles',
@@ -210,14 +222,14 @@ module.exports = class Creator extends EventEmitter {
         choices: [
           {
             name: 'In dedicated config files',
-            value: 'files'
+            value: 'files',
           },
           {
             name: 'In package.json',
-            value: 'pkg'
-          }
-        ]
-      }
+            value: 'pkg',
+          },
+        ],
+      },
     ]
 
     // ask for packageManager once
@@ -228,7 +240,7 @@ module.exports = class Creator extends EventEmitter {
         packageManagerChoices.push({
           name: 'Use Yarn',
           value: 'yarn',
-          short: 'Yarn'
+          short: 'Yarn',
         })
       }
 
@@ -236,21 +248,22 @@ module.exports = class Creator extends EventEmitter {
         packageManagerChoices.push({
           name: 'Use PNPM',
           value: 'pnpm',
-          short: 'PNPM'
+          short: 'PNPM',
         })
       }
 
       packageManagerChoices.push({
         name: 'Use NPM',
         value: 'npm',
-        short: 'NPM'
+        short: 'NPM',
       })
 
       outroPrompts.push({
         name: 'packageManager',
         type: 'list',
-        message: 'Pick the package manager to use when installing dependencies:',
-        choices: packageManagerChoices
+        message:
+          'Pick the package manager to use when installing dependencies:',
+        choices: packageManagerChoices,
       })
     }
 
@@ -259,9 +272,9 @@ module.exports = class Creator extends EventEmitter {
 
   resolveFinalPrompts() {
     // patch generator-injected prompts to only show in manual mode
-    this.injectedPrompts.forEach(prompt => {
+    this.injectedPrompts.forEach((prompt) => {
       const originalWhen = prompt.when || (() => true)
-      prompt.when = answers => {
+      prompt.when = (answers) => {
         return isManualMode(answers) && originalWhen(answers)
       }
     })
@@ -270,7 +283,7 @@ module.exports = class Creator extends EventEmitter {
       this.presetPrompt,
       this.featurePrompt,
       ...this.injectedPrompts,
-      ...this.outroPrompts
+      ...this.outroPrompts,
     ]
     debug('vitamin-cli:prompts')(prompts)
     return prompts
